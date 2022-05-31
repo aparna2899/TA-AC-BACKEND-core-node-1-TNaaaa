@@ -47,7 +47,7 @@ var http = require('http');
 
 var server = http.createServer(handleReqest);
 function handleReqest(req, res) {
-  console.log(req.headers);
+  res.end(req.headers['user-agent']);
 }
 server.listen(5555, () => {
   console.log('server is listening on port 5555');
@@ -80,6 +80,18 @@ Q. write code to create a node server
 - add listener on port 7000
 - also add a callback function to listener with a console `server listening on port 7000`
 - return entire request headers in response.
+
+```js
+var http = require('http');
+
+var server = http.createServer(handleReqest);
+function handleReqest(req, res) {
+  res.end(JSON.stringify(req.headers));
+}
+server.listen(7000, () => {
+  console.log('server is listening on port 7000');
+});
+```
 
 Q. create a server
 
@@ -237,7 +249,7 @@ function handleReqest(req, res) {
   let parsedUrl = url.parse(req.url);
   console.log(parsedUrl.pathname);
   res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify({ email: parsedUrl.query }));
+  res.end(JSON.stringify(parsedUrl.query));
 }
 
 server.listen(4345, () => {
